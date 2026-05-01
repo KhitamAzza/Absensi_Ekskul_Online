@@ -30,16 +30,16 @@
   <div class="login-card">
     <div class="login-icon">📋</div>
     <h2>Absensi Ekstra</h2>
-    <p>Scan password untuk membuka absensi</p>
+    <p>Masukkan password anda</p>
     <input type="password" id="passwordInput" class="login-input" placeholder="••••••" maxlength="20" autocomplete="off">
-    <div class="login-hint">Ketik password untuk auto-login</div>
+    <div class="login-hint">Ketik password disini</div>
   </div>
 </div>
 
 <!-- ═══ MAIN APP ═══ -->
 <div id="appScreen" class="container hidden">
   <div class="app-header">
-    <h1>Absensi Harian</h1>
+    <h1>Absensi Ekstrakurikuler</h1>
     <div class="date-badge">📅 <span id="currentDate">-</span></div>
     <div class="ekstra-badge" id="ekstraTag">-</div>
   </div>
@@ -48,7 +48,7 @@
 
 <!-- ═══ FAB ═══ -->
 <button id="fabUpdate" class="fab hidden" onclick="sendUpdate()" disabled>
-  <span>🔄 UPDATE</span>
+  <span>UPDATE ABSENSI</span>
   <span class="fab-count" id="fabCount">0</span>
 </button>
 
