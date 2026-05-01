@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Absensi Ekstra</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ═══ LOADING (hidden by default) ═══ -->
+<div id="loadingScreen" class="loading-screen hidden">
+  <div class="spinner"></div>
+  <h3>Memeriksa password</h3>
+  <p class="loading-dots">Mohon tunggu</p>
+</div>
+
+<!-- ═══ BLOCKED ═══ -->
+<div id="blockedScreen" class="blocked-screen hidden">
+  <div class="blocked-card">
+    <div class="blocked-icon">🔒</div>
+    <h2>Akses Diblokir</h2>
+    <p id="blockedReason">Aplikasi tidak bisa digunakan.</p>
+    <div class="blocked-time" id="blockedTime"></div>
+  </div>
+</div>
+
+<!-- ═══ LOGIN ═══ -->
+<div id="loginScreen" class="login-screen">
+  <div class="login-card">
+    <div class="login-icon">📋</div>
+    <h2>Absensi Ekstra</h2>
+    <p>Scan password untuk membuka absensi</p>
+    <input type="password" id="passwordInput" class="login-input" placeholder="••••••" maxlength="20" autocomplete="off">
+    <div class="login-hint">Ketik password untuk auto-login</div>
+  </div>
+</div>
+
+<!-- ═══ MAIN APP ═══ -->
+<div id="appScreen" class="container hidden">
+  <div class="app-header">
+    <h1>Absensi Harian</h1>
+    <div class="date-badge">📅 <span id="currentDate">-</span></div>
+    <div class="ekstra-badge" id="ekstraTag">-</div>
+  </div>
+  <div class="student-list" id="studentList"></div>
+</div>
+
+<!-- ═══ FAB ═══ -->
+<button id="fabUpdate" class="fab hidden" onclick="sendUpdate()" disabled>
+  <span>🔄 UPDATE</span>
+  <span class="fab-count" id="fabCount">0</span>
+</button>
+
+<!-- ═══ TOAST ═══ -->
+<div id="toast" class="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
