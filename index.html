@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Absensi Ekstra</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --card-hover: #263449;
+    --border: #334155;
+    --text: #f1f5f9;
+    --text-dim: #94a3b8;
+    --accent: #06b6d4;
+    --accent-glow: rgba(6, 182, 212, 0.3);
+    --green: #10b981;
+    --green-glow: rgba(16, 185, 129, 0.3);
+    --red: #ef4444;
+    --red-glow: rgba(239, 68, 68, 0.3);
+    --orange: #f59e0b;
+  }
+  
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 100px;
+  }
+  
+  .container { max-width: 480px; margin: 0 auto; padding: 16px; }
+  
+  /* ═══ LOGIN ═══ */
+  .login-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 16px;
+  }
+  
+  .login-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 40px 32px;
+    width: 100%;
+    max-width: 360px;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(6, 182, 212, 0.1);
+  }
+  
+  .login-icon {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, var(--accent), #0891b2);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    font-size: 28px;
+    box-shadow: 0 4px 20px var(--accent-glow);
+  }
+  
+  .login-card h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--text), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .login-card p {
+    color: var(--text-dim);
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+  
+  .login-input {
+    width: 100%;
+    padding: 16px 20px;
+    background: var(--bg);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 6px;
+    color: var(--text);
+    margin-bottom: 8px;
+    transition: all 0.3s;
+    font-family: 'Courier New', monospace;
+  }
+  
+  .login-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-glow);
+  }
+  
+  .login-hint {
+    color: var(--text-dim);
+    font-size: 12px;
+    margin-bottom: 24px;
+  }
+  
+  /* ═══ HEADER ═══ */
+  .app-header {
+    padding: 20px 0 12px;
+  }
+  
+  .app-header h1 {
+    font-size: 24px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--text), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .date-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 8px;
+  }
+  
+  .ekstra-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, rgba(6,182,212,0.15), rgba(6,182,212,0.05));
+    border: 1px solid rgba(6,182,212,0.3);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-top: 10px;
+  }
+  
+  /* ═══ STUDENT CARDS ═══ */
+  .student-list { display: flex; flex-direction: column; gap: 12px; }
+  
+  .student-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .student-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: transparent;
+    transition: all 0.3s;
+  }
+  
+  .student-card.hadir::before { background: var(--green); }
+  .student-card.alpha::before { background: var(--red); }
+  
+  .student-card.pending {
+    border-color: rgba(245, 158, 11, 0.4);
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.1);
+  }
+  
+  .student-info h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  
+  .student-info .kelas {
+    font-size: 12px;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .status-btn {
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border: 2px solid;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  
+  .status-btn.alpha {
+    background: transparent;
+    color: var(--red);
+    border-color: var(--red);
+  }
+  
+  .status-btn.alpha:hover {
+    background: rgba(239, 68, 68, 0.1);
+    box-shadow: 0 0 20px var(--red-glow);
+  }
+  
+  .status-btn.hadir {
+    background: linear-gradient(135deg, var(--green), #059669);
+    color: #fff;
+    border-color: var(--green);
+    box-shadow: 0 4px 15px var(--green-glow);
+  }
+  
+  .status-btn.hadir:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 25px var(--green-glow);
+  }
+  
+  .pending-pulse {
+    width: 8px;
+    height: 8px;
+    background: var(--orange);
+    border-radius: 50%;
+    position: relative;
+  }
+  
+  .pending-pulse::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: var(--orange);
+    opacity: 0;
+    animation: pulse 1.5s infinite;
+  }
+  
+  @keyframes pulse {
+    0% { transform: scale(0.5); opacity: 0.8; }
+    100% { transform: scale(2); opacity: 0; }
+  }
+  
+  /* ═══ FAB ═══ */
+  .fab {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--accent), #0891b2);
+    color: #fff;
+    padding: 16px 32px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border: none;
+    box-shadow: 0 4px 25px var(--accent-glow);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 100;
+    transition: all 0.3s;
+  }
+  
+  .fab:hover {
+    transform: translateX(-50%) translateY(-2px);
+    box-shadow: 0 8px 35px var(--accent-glow);
+  }
+  
+  .fab:active { transform: translateX(-50%) scale(0.96); }
+  
+  .fab:disabled {
+    background: var(--border);
+    box-shadow: none;
+    cursor: not-allowed;
+    color: var(--text-dim);
+  }
+  
+  .fab-count {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 12px;
+    min-width: 24px;
+    text-align: center;
+  }
+  
+  /* ═══ TOAST ═══ */
+  .toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 14px 28px;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 200;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  }
+  
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  
+  .toast.success { border-color: var(--green); }
+  .toast.error { border-color: var(--red); }
+  
+  /* ═══ EMPTY STATE ═══ */
+  .empty-state {
+    text-align: center;
+    color: var(--text-dim);
+    padding: 60px 20px;
+  }
+  
+  .empty-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+  }
+  
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- ═══ LOGIN ═══ -->
+<div id="loginScreen" class="login-screen">
+  <div class="login-card">
+    <div class="login-icon">📋</div>
+    <h2>Absensi Ekstra</h2>
+    <p>Scan password untuk membuka absensi</p>
+    <input type="password" id="passwordInput" class="login-input" placeholder="••••••" maxlength="20" autocomplete="off">
+    <div class="login-hint">Ketik password untuk auto-login</div>
+  </div>
+</div>
+
+<!-- ═══ MAIN APP ═══ -->
+<div id="appScreen" class="container hidden">
+  <div class="app-header">
+    <h1>Absensi Harian</h1>
+    <div class="date-badge">📅 <span id="currentDate">-</span></div>
+    <div class="ekstra-badge" id="ekstraTag">-</div>
+  </div>
+  
+  <div class="student-list" id="studentList"></div>
+</div>
+
+<!-- ═══ FAB ═══ -->
+<button id="fabUpdate" class="fab hidden" onclick="sendUpdate()" disabled>
+  <span>🔄 UPDATE</span>
+  <span class="fab-count" id="fabCount">0</span>
+</button>
+
+<!-- ═══ TOAST ═══ -->
+<div id="toast" class="toast"></div>
+
+<script>
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbzowRyPgNxxjbf9nIJlwLrbtWJTc6NO4aucfWZuZSq6MX96hD4Q20wcYuVbRU7rNACe/exec';
+const PASSWORDS = { 
+  'eksbanjari': 'Al-Banjari', 'futsal123': 'Futsal', 'eksesport': 'E-Sport',
+  'eksfutsal': 'Futsal', 'ekspakbola': 'Sepakbola', 'eksperdiri': 'Perisai diri',
+  'eksmusik': 'Musik', 'eksminton': 'Badminton', 'eksbasket': 'Basket',
+  'eksbvoli': 'Bola Voli', 'ekstari': 'Seni tari', 'ekstabog': 'Tata Boga',
+  'ekstarias': 'Tata rias', 'ekstapmr': 'PMR', 'ekswondo': 'Taekwondo',
+  'eksdance': 'Dance', 'ekscinalam': 'Pecinta Alam', 'adminis':'Zero'
+};
+
+let currentEkstra = '', todayDate = '', students = [], sheetAttendance = {}, localChanges = {};
+
+document.addEventListener('DOMContentLoaded', () => {
+  todayDate = new Date().toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' });
+  document.getElementById('currentDate').textContent = todayDate;
+  
+  // Auto-login on password input
+  document.getElementById('passwordInput').addEventListener('input', function() {
+    const pass = this.value.trim();
+    const ekstra = PASSWORDS[pass];
+    if (ekstra) {
+      currentEkstra = ekstra;
+      document.getElementById('ekstraTag').textContent = ekstra;
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('appScreen').classList.remove('hidden');
+      loadData();
+    }
+  });
+});
+
+async function api(action, payload = {}) {
+  const res = await fetch(GAS_URL, { method: 'POST', body: JSON.stringify({ action, ...payload }) });
+  return res.json();
+}
+
+async function loadData() {
+  try {
+    const r = await api('getAttendanceData', { ekstra: currentEkstra, date: todayDate });
+    students = r.students || [];
+    sheetAttendance = r.attendance || {};
+    localChanges = {};
+    renderList();
+    updateFab();
+  } catch (e) {
+    toast('❌ Error load data: ' + e.message, 'error');
+  }
+}
+
+function renderList() {
+  const box = document.getElementById('studentList');
+  if (!students.length) {
+    box.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><div>Tidak ada siswa di ekstra ini</div></div>';
+    return;
+  }
+  
+  box.innerHTML = students.map(s => {
+    const nama = s.nama;
+    let status = 'ALPHA';
+    if (localChanges.hasOwnProperty(nama)) status = localChanges[nama];
+    else if (sheetAttendance[nama] === 'HADIR') status = 'HADIR';
+    
+    const isAlpha = status === 'ALPHA';
+    const hasChanged = localChanges.hasOwnProperty(nama);
+    
+    return `
+      <div class="student-card ${isAlpha ? 'alpha' : 'hadir'} ${hasChanged ? 'pending' : ''}">
+        <div class="student-info">
+          <h3>${escapeHtml(nama)}</h3>
+          <div class="kelas">👤 ${escapeHtml(s.kelas)}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          ${hasChanged ? '<div class="pending-pulse"></div>' : ''}
+          <button class="status-btn ${isAlpha ? 'alpha' : 'hadir'}" data-nama="${encodeURIComponent(nama)}">
+            ${isAlpha ? '● ALPHA' : '✓ HADIR'}
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+document.getElementById('studentList').addEventListener('click', function(e) {
+  const btn = e.target.closest('.status-btn');
+  if (!btn) return;
+  const nama = decodeURIComponent(btn.dataset.nama);
+  if (nama) toggleStatus(nama);
+});
+
+function toggleStatus(nama) {
+  let current = 'ALPHA';
+  if (localChanges.hasOwnProperty(nama)) current = localChanges[nama];
+  else if (sheetAttendance[nama] === 'HADIR') current = 'HADIR';
+  localChanges[nama] = (current === 'ALPHA') ? 'HADIR' : 'ALPHA';
+  renderList();
+  updateFab();
+}
+
+function updateFab() {
+  const count = Object.keys(localChanges).length;
+  document.getElementById('fabCount').textContent = count;
+  const fab = document.getElementById('fabUpdate');
+  fab.disabled = count === 0;
+  fab.classList.toggle('hidden', count === 0);
+}
+
+async function sendUpdate() {
+  const fab = document.getElementById('fabUpdate');
+  const originalHTML = fab.innerHTML;
+  fab.innerHTML = '<span>⏳</span><span>SENDING...</span>';
+  fab.disabled = true;
+  
+  try {
+    const r = await api('updateAttendance', { ekstra: currentEkstra, date: todayDate, attendance: localChanges });
+    if (r.success) {
+      toast(`✅ ${r.updated} data berhasil diupdate`, 'success');
+      // Reload fresh data from spreadsheet
+      await loadData();
+    } else {
+      toast('❌ Gagal: ' + (r.error || 'unknown'), 'error');
+      fab.disabled = false;
+    }
+  } catch (e) {
+    toast('❌ Error: ' + e.message, 'error');
+    fab.disabled = false;
+  }
+  
+  fab.innerHTML = originalHTML;
+}
+
+function toast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + (type || '');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+</script>
+
+</body>
+</html>
