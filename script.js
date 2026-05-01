@@ -136,7 +136,7 @@ function updateFab() {
 async function sendUpdate() {
   const fab = document.getElementById('fabUpdate');
   const originalHTML = fab.innerHTML;
-  fab.innerHTML = '<span>⏳</span><span>SENDING...</span>';
+  fab.innerHTML = '<span>⏳</span><span>UPDATING</span>';
   fab.disabled = true;
   
   try {
