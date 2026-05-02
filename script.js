@@ -5,7 +5,7 @@ const PASSWORDS = {
   'eksmusik': 'Musik', 'eksminton': 'Badminton', 'eksbasket': 'Basket',
   'eksbvoli': 'Bola Voli', 'ekstari': 'Seni tari', 'ekstabog': 'Tata Boga',
   'ekstarias': 'Tata rias', 'ekstapmr': 'PMR', 'ekswondo': 'Taekwondo',
-  'eksdance': 'Dance', 'ekscinalam': 'Pecinta Alam', 'adminis':'Zero'
+  'eksdance': 'Dance', 'ekscinalam': 'Pecinta Alam', 'adminis':'Zero','ekscatur':'Catur'
 };
 
 let currentEkstra = '', todayDate = '', students = [], sheetAttendance = {}, localChanges = {};
