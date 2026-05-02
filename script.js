@@ -4,7 +4,7 @@ const PASSWORDS = {
   'eksfutsal': 'Futsal', 'ekspakbola': 'Sepakbola', 'eksperdiri': 'Perisai diri',
   'eksmusik': 'Musik', 'eksminton': 'Badminton', 'eksbasket': 'Basket',
   'eksbvoli': 'Bola Voli', 'ekstari': 'Seni tari', 'ekstabog': 'Tata Boga',
-  'ekstarias': 'Tata Rias', 'ekstapmr': 'PMR', 'ekswondo': 'Taekwondo',
+  'eksarias': 'Tata Rias', 'ekstapmr': 'PMR', 'ekswondo': 'Taekwondo',
   'eksdance': 'Dance', 'ekscinalam': 'Pecinta Alam', 'adminis':'Zero', 'ekscatur':'Catur'
 };
 
